@@ -1,0 +1,26 @@
+#editor {
+  min-height: 10em;
+  background: #eee;
+  font-family: monospace;
+  white-space: pre;
+}
+
+#editor > div {
+  min-height: 1em;
+  line-height: 1em;
+}
+
+#editor > div > .cursor {
+  animation: cursor 1200ms steps(1, end) infinite;
+}
+
+@keyframes cursor {
+  from, to {
+    background: #000;
+    color: #fff;
+  }
+  50% {
+    background: none;
+    color: #000;
+  }
+}
