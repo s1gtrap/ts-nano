@@ -1,0 +1,20 @@
+{
+  "name": "ts-nano",
+  "version": "0.1.0",
+  "description": "A nano-like text editor attached to a HTML element written in TypeScript",
+  "keywords": [
+    "browser",
+    "editor"
+  ],
+  "license": "MIT",
+  "author": "William Tange <will@brt.sexy> (https://tan.ge/)",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  },
+  "respository": "s1gtrap/ts-nano"
+}
