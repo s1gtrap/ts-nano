@@ -74,6 +74,25 @@ describe('Rope', () => {
     });
   });
 
+  describe('#lines', () => {
+    it('should iterate over lines', () => {
+      expect(Array.from(Rope.leaf('').lines())).to.deep.equal(['']);
+      expect(Array.from(Rope.leaf('\n').lines())).to.deep.equal(['', '']);
+      expect(Array.from(Rope.leaf('\r\n').lines())).to.deep.equal(['', '']);
+      expect(Array.from(Rope.leaf('\n\n').lines())).to.deep.equal(['', '', '']);
+      expect(Array.from(Rope.leaf('\n\r\n').lines())).to.deep.equal(['', '', '']);
+      expect(Array.from(Rope.leaf('\r\n\r\n').lines())).to.deep.equal(['', '', '']);
+      expect(Array.from(Rope.leaf('a\n').lines())).to.deep.equal(['a', '']);
+      expect(Array.from(Rope.leaf(' \r\n').lines())).to.deep.equal([' ', '']);
+      expect(Array.from(Rope.leaf('Hello world\n').lines())).to.deep.equal(['Hello world', '']);
+      expect(Array.from(Rope.leaf('Hello world\r\n').lines())).to.deep.equal(['Hello world', '']);
+      expect(Array.from(Rope.leaf('Hello,\nworld\n').lines())).to.deep.equal(['Hello,', 'world', '']);
+      expect(Array.from(Rope.leaf('Hello,\nworld\r\n').lines())).to.deep.equal(['Hello,', 'world', '']);
+      expect(Array.from(Rope.leaf('Hello,\r\nworld\n').lines())).to.deep.equal(['Hello,', 'world', '']);
+      expect(Array.from(Rope.leaf('Hello,\r\nworld\r\n').lines())).to.deep.equal(['Hello,', 'world', '']);
+    });
+  });
+
   describe('#charToLine', () => {
     it('should return line index of given char', () => {
       expect(Rope.leaf('').charToLine(0)).to.equal(0);
