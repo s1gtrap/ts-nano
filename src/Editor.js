@@ -37,7 +37,7 @@ var Editor = /** @class */ (function () {
                 }
                 break;
             case 'ArrowRight':
-                if (this._cursor[0] < this._rope.lines()[this._cursor[2]].length) {
+                if (this._cursor[0] < Array.from(this._rope.lines())[this._cursor[2]].length) {
                     this._cursor[0] += 1;
                     this._cursor[1] = this._cursor[0];
                     this.render();
@@ -49,20 +49,20 @@ var Editor = /** @class */ (function () {
             case 'ArrowUp':
                 if (this._cursor[2] > 0) {
                     this._cursor[2] -= 1;
-                    this._cursor[0] = Math.min(this._cursor[1], this._rope.lines()[this._cursor[2]].length);
+                    this._cursor[0] = Math.min(this._cursor[1], Array.from(this._rope.lines())[this._cursor[2]].length);
                     this.render();
                 }
                 break;
             case 'ArrowDown':
-                if (this._cursor[2] < this._rope.lines().length - 1) {
+                if (this._cursor[2] < Array.from(this._rope.lines()).length - 1) {
                     this._cursor[2] += 1;
-                    this._cursor[0] = Math.min(this._cursor[1], (_a = this._rope.lines()[this._cursor[2]]) === null || _a === void 0 ? void 0 : _a.length);
+                    this._cursor[0] = Math.min(this._cursor[1], (_a = Array.from(this._rope.lines())[this._cursor[2]]) === null || _a === void 0 ? void 0 : _a.length);
                     this.render();
                 }
                 break;
             case 'Backspace':
                 if (this._rope.lineToChar(this._cursor[2]) + this._cursor[0] > 0) {
-                    var len = (_b = this._rope.lines()[this._cursor[2] - 1]) === null || _b === void 0 ? void 0 : _b.length;
+                    var len = (_b = Array.from(this._rope.lines())[this._cursor[2] - 1]) === null || _b === void 0 ? void 0 : _b.length;
                     this._rope.remove(this._rope.lineToChar(this._cursor[2]) + this._cursor[0] - 1);
                     if (this._cursor[0] > 0) {
                         this._cursor[1] = this._cursor[0] -= 1;
@@ -99,7 +99,7 @@ var Editor = /** @class */ (function () {
         while (this._elem.firstChild) {
             this._elem.removeChild(this._elem.firstChild);
         }
-        this._rope.lines().forEach(function (line, i) {
+        Array.from(this._rope.lines()).forEach(function (line, i) {
             var div = document.createElement('div');
             if (i === _this._cursor[2]) {
                 var head = document.createElement('span');

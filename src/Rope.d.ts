@@ -13,5 +13,5 @@ export default class Rope {
     charToLine(char: number): number;
     lineToChar(line: number): number;
     toString(): string;
-    lines(): string[];
+    lines(): IterableIterator<string>;
 }

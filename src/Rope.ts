@@ -146,7 +146,7 @@ export default class Rope {
     }
   }
 
-  public lines(): string[] {
-    return this.toString().split(/\r?\n/);
+  public lines(): IterableIterator<string> {
+    return this.toString().split(/\r?\n/)[Symbol.iterator]();
   }
 }

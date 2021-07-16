@@ -32,7 +32,7 @@ export default class Editor {
         }
         break;
       case 'ArrowRight':
-        if (this._cursor[0] < this._rope.lines()[this._cursor[2]].length) {
+        if (this._cursor[0] < Array.from(this._rope.lines())[this._cursor[2]].length) {
           this._cursor[0] += 1;
           this._cursor[1] = this._cursor[0];
           this.render();
@@ -43,20 +43,20 @@ export default class Editor {
       case 'ArrowUp':
         if (this._cursor[2] > 0) {
           this._cursor[2] -= 1;
-          this._cursor[0] = Math.min(this._cursor[1], this._rope.lines()[this._cursor[2]].length);
+          this._cursor[0] = Math.min(this._cursor[1], Array.from(this._rope.lines())[this._cursor[2]].length);
           this.render();
         }
         break;
       case 'ArrowDown':
-        if (this._cursor[2] < this._rope.lines().length - 1) {
+        if (this._cursor[2] < Array.from(this._rope.lines()).length - 1) {
           this._cursor[2] += 1;
-          this._cursor[0] = Math.min(this._cursor[1], this._rope.lines()[this._cursor[2]]?.length);
+          this._cursor[0] = Math.min(this._cursor[1], Array.from(this._rope.lines())[this._cursor[2]]?.length);
           this.render();
         }
         break;
       case 'Backspace':
         if (this._rope.lineToChar(this._cursor[2]) + this._cursor[0] > 0) {
-          const len = this._rope.lines()[this._cursor[2] - 1]?.length;
+          const len = Array.from(this._rope.lines())[this._cursor[2] - 1]?.length;
           this._rope.remove(this._rope.lineToChar(this._cursor[2]) + this._cursor[0] - 1);
           if (this._cursor[0] > 0) {
             this._cursor[1] = this._cursor[0] -= 1;
@@ -93,7 +93,7 @@ export default class Editor {
     while (this._elem.firstChild) {
       this._elem.removeChild(this._elem.firstChild);
     }
-    this._rope.lines().forEach((line, i) => {
+    Array.from(this._rope.lines()).forEach((line, i) => {
       const div = document.createElement('div');
       if (i === this._cursor[2]) {
         const head = document.createElement('span');

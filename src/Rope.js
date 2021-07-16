@@ -149,7 +149,7 @@ var Rope = /** @class */ (function () {
         }
     };
     Rope.prototype.lines = function () {
-        return this.toString().split(/\r?\n/);
+        return this.toString().split(/\r?\n/)[Symbol.iterator]();
     };
     return Rope;
 }());
