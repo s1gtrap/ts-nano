@@ -10,8 +10,8 @@ export default class Rope {
     remove(idx: number, len?: number): void;
     split(idx: number): Rope;
     concat(tail: Rope): void;
+    lines(): IterableIterator<string>;
     charToLine(char: number): number;
     lineToChar(line: number): number;
     toString(): string;
-    lines(): IterableIterator<string>;
 }

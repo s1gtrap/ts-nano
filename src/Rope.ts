@@ -1,3 +1,5 @@
+import Lines from './Lines';
+
 type Node = {
   kind: 'branch',
   left: Rope | null,
@@ -102,6 +104,10 @@ export default class Rope {
     };
   }
 
+  public lines(): IterableIterator<string> {
+    return new Lines(this);
+  }
+
   public charToLine(char: number): number {
     let content = this.toString();
     for (let line = 0;; line++) {
@@ -144,9 +150,5 @@ export default class Rope {
       case 'leaf':
         return this._node.text;
     }
-  }
-
-  public lines(): IterableIterator<string> {
-    return this.toString().split(/\r?\n/)[Symbol.iterator]();
   }
 }

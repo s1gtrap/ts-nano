@@ -1,5 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var Lines_1 = __importDefault(require("./Lines"));
 var Rope = /** @class */ (function () {
     function Rope(_node) {
         this._node = _node;
@@ -103,6 +107,9 @@ var Rope = /** @class */ (function () {
             right: tail,
         };
     };
+    Rope.prototype.lines = function () {
+        return new Lines_1.default(this);
+    };
     Rope.prototype.charToLine = function (char) {
         var content = this.toString();
         for (var line = 0;; line++) {
@@ -147,9 +154,6 @@ var Rope = /** @class */ (function () {
             case 'leaf':
                 return this._node.text;
         }
-    };
-    Rope.prototype.lines = function () {
-        return this.toString().split(/\r?\n/)[Symbol.iterator]();
     };
     return Rope;
 }());
