@@ -11,6 +11,7 @@ export default class Rope {
     split(idx: number): Rope;
     concat(tail: Rope): void;
     lines(): IterableIterator<string>;
+    lineIndices(): IterableIterator<[number, string]>;
     charToLine(char: number): number;
     lineToChar(line: number): number;
     toString(): string;

@@ -1,4 +1,5 @@
 import Lines from './Lines';
+import LineIndices from './LineIndices';
 
 type Node = {
   kind: 'branch',
@@ -106,6 +107,10 @@ export default class Rope {
 
   public lines(): IterableIterator<string> {
     return new Lines(this);
+  }
+
+  public lineIndices(): IterableIterator<[number, string]> {
+    return new LineIndices(this);
   }
 
   public charToLine(char: number): number {

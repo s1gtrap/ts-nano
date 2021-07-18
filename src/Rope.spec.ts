@@ -93,6 +93,25 @@ describe('Rope', () => {
     });
   });
 
+  describe('#lineIndices', () => {
+    it('should iterate over lines with character index/offset', () => {
+      expect(Array.from(Rope.leaf('').lineIndices())).to.deep.equal([[0, '']]);
+      expect(Array.from(Rope.leaf('\n').lineIndices())).to.deep.equal([[0, ''], [1, '']]);
+      expect(Array.from(Rope.leaf('\r\n').lineIndices())).to.deep.equal([[0, ''], [2, '']]);
+      expect(Array.from(Rope.leaf('\n\n').lineIndices())).to.deep.equal([[0, ''], [1, ''], [2, '']]);
+      expect(Array.from(Rope.leaf('\n\r\n').lineIndices())).to.deep.equal([[0, ''], [1, ''], [3, '']]);
+      expect(Array.from(Rope.leaf('\r\n\r\n').lineIndices())).to.deep.equal([[0, ''], [2, ''], [4, '']]);
+      expect(Array.from(Rope.leaf('a\n').lineIndices())).to.deep.equal([[0, 'a'], [2, '']]);
+      expect(Array.from(Rope.leaf(' \r\n').lineIndices())).to.deep.equal([[0, ' '], [3, '']]);
+      expect(Array.from(Rope.leaf('Hello world\n').lineIndices())).to.deep.equal([[0, 'Hello world'], [12, '']]);
+      expect(Array.from(Rope.leaf('Hello world\r\n').lineIndices())).to.deep.equal([[0, 'Hello world'], [13, '']]);
+      expect(Array.from(Rope.leaf('Hello,\nworld\n').lineIndices())).to.deep.equal([[0, 'Hello,'], [7, 'world'], [13, '']]);
+      expect(Array.from(Rope.leaf('Hello,\nworld\r\n').lineIndices())).to.deep.equal([[0, 'Hello,'], [7, 'world'], [14, '']]);
+      expect(Array.from(Rope.leaf('Hello,\r\nworld\n').lineIndices())).to.deep.equal([[0, 'Hello,'], [8, 'world'], [14, '']]);
+      expect(Array.from(Rope.leaf('Hello,\r\nworld\r\n').lineIndices())).to.deep.equal([[0, 'Hello,'], [8, 'world'], [15, '']]);
+    });
+  });
+
   describe('#charToLine', () => {
     it('should return line index of given char', () => {
       expect(Rope.leaf('').charToLine(0)).to.equal(0);

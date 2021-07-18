@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lines_1 = __importDefault(require("./Lines"));
+var LineIndices_1 = __importDefault(require("./LineIndices"));
 var Rope = /** @class */ (function () {
     function Rope(_node) {
         this._node = _node;
@@ -109,6 +110,9 @@ var Rope = /** @class */ (function () {
     };
     Rope.prototype.lines = function () {
         return new Lines_1.default(this);
+    };
+    Rope.prototype.lineIndices = function () {
+        return new LineIndices_1.default(this);
     };
     Rope.prototype.charToLine = function (char) {
         var content = this.toString();
