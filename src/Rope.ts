@@ -114,24 +114,19 @@ export default class Rope {
   }
 
   public charToLine(char: number): number {
-    let content = this.toString();
-    for (let line = 0;; line++) {
-      const idx = content.indexOf('\n') + 1;
-      if (idx !== 0) {
-        if (char < idx) {
-          return line;
-        } else {
-          char -= idx;
-          content = content.slice(idx);
-        }
-      } else {
-        if (char <= content.length) {
-          return line;
-        } else {
-          throw new Error('char ${char} out of bounds');
-        }
+    let end = 0;
+    let num = 0;
+    for (const [idx, line] of this.lineIndices()) {
+      end = idx + line.length;
+      if (idx > char) {
+        break;
       }
+      num += 1;
     }
+    if (char > end) {
+      throw new Error('char ${char} out of bounds');
+    }
+    return num - 1;
   }
 
   public lineToChar(line: number): number {
