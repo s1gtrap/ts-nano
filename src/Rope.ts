@@ -130,17 +130,19 @@ export default class Rope {
   }
 
   public lineToChar(line: number): number {
-    let content = this.toString();
-    let offset = 0;
-    for (let i = 0; i !== line; i++) {
-      const n = content.indexOf('\n') + 1;
-      if (n === 0) {
-        throw new Error(`line ${line} is out of bounds`);
+    let end = 0;
+    let num = 0;
+    for (const [idx, l] of this.lineIndices()) {
+      end = idx + l.length;
+      if (num === line) {
+        return idx;
       }
-      offset += n;
-      content = content.slice(n);
+      num += 1;
     }
-    return offset;
+    if (line >= num) {
+      throw new Error(`line ${line} is out of bounds`);
+    }
+    return end;
   }
 
   public toString(): string {

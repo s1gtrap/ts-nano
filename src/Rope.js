@@ -168,17 +168,30 @@ var Rope = /** @class */ (function () {
         return num - 1;
     };
     Rope.prototype.lineToChar = function (line) {
-        var content = this.toString();
-        var offset = 0;
-        for (var i = 0; i !== line; i++) {
-            var n = content.indexOf('\n') + 1;
-            if (n === 0) {
-                throw new Error("line " + line + " is out of bounds");
+        var e_2, _a;
+        var end = 0;
+        var num = 0;
+        try {
+            for (var _b = __values(this.lineIndices()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var _d = __read(_c.value, 2), idx = _d[0], l = _d[1];
+                end = idx + l.length;
+                if (num === line) {
+                    return idx;
+                }
+                num += 1;
             }
-            offset += n;
-            content = content.slice(n);
         }
-        return offset;
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        if (line >= num) {
+            throw new Error("line " + line + " is out of bounds");
+        }
+        return end;
     };
     Rope.prototype.toString = function () {
         var _a, _b;
