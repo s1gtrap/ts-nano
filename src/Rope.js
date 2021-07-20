@@ -32,6 +32,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lines_1 = __importDefault(require("./Lines"));
 var LineIndices_1 = __importDefault(require("./LineIndices"));
+var Utils_1 = __importDefault(require("./Utils"));
 var Rope = /** @class */ (function () {
     function Rope(_node) {
         this._node = _node;
@@ -169,16 +170,12 @@ var Rope = /** @class */ (function () {
     };
     Rope.prototype.lineToChar = function (line) {
         var e_2, _a;
-        var end = 0;
-        var num = 0;
         try {
-            for (var _b = __values(this.lineIndices()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var _d = __read(_c.value, 2), idx = _d[0], l = _d[1];
-                end = idx + l.length;
-                if (num === line) {
-                    return idx;
+            for (var _b = __values(Utils_1.default.enumerate(this.lineIndices())), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var _d = __read(_c.value, 2), i = _d[0], _e = __read(_d[1], 1), char = _e[0];
+                if (i === line) {
+                    return char;
                 }
-                num += 1;
             }
         }
         catch (e_2_1) { e_2 = { error: e_2_1 }; }
@@ -188,10 +185,7 @@ var Rope = /** @class */ (function () {
             }
             finally { if (e_2) throw e_2.error; }
         }
-        if (line >= num) {
-            throw new Error("line " + line + " is out of bounds");
-        }
-        return end;
+        throw new Error("line " + line + " is out of bounds");
     };
     Rope.prototype.toString = function () {
         var _a, _b;

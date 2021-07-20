@@ -1,5 +1,6 @@
 import Lines from './Lines';
 import LineIndices from './LineIndices';
+import Utils from './Utils';
 
 type Node = {
   kind: 'branch',
@@ -130,19 +131,12 @@ export default class Rope {
   }
 
   public lineToChar(line: number): number {
-    let end = 0;
-    let num = 0;
-    for (const [idx, l] of this.lineIndices()) {
-      end = idx + l.length;
-      if (num === line) {
-        return idx;
+    for (const [i, [char]] of Utils.enumerate(this.lineIndices())) {
+      if (i === line) {
+        return char;
       }
-      num += 1;
     }
-    if (line >= num) {
-      throw new Error(`line ${line} is out of bounds`);
-    }
-    return end;
+    throw new Error(`line ${line} is out of bounds`);
   }
 
   public toString(): string {
