@@ -10,10 +10,27 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Utils_1 = __importDefault(require("./Utils"));
 var Rope_1 = __importDefault(require("./Rope"));
 var Editor = /** @class */ (function () {
     function Editor(_elem, content) {
@@ -110,10 +127,9 @@ var Editor = /** @class */ (function () {
         while (this._elem.firstChild) {
             this._elem.removeChild(this._elem.firstChild);
         }
-        var i = 0;
         try {
-            for (var _b = __values(this._rope.lines()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var line = _c.value;
+            for (var _b = __values(Utils_1.default.enumerate(this._rope.lines())), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var _d = __read(_c.value, 2), i = _d[0], line = _d[1];
                 var div = document.createElement('div');
                 if (i === this._cursor[2]) {
                     var head = document.createElement('span');
@@ -131,7 +147,6 @@ var Editor = /** @class */ (function () {
                     div.textContent = line;
                 }
                 this._elem.appendChild(div);
-                i += 1;
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }

@@ -1,3 +1,4 @@
+import Utils from './Utils';
 import Rope from './Rope';
 
 export default class Editor {
@@ -93,8 +94,7 @@ export default class Editor {
     while (this._elem.firstChild) {
       this._elem.removeChild(this._elem.firstChild);
     }
-    let i = 0;
-    for (const line of this._rope.lines()) {
+    for (const [i, line] of Utils.enumerate(this._rope.lines())) {
       const div = document.createElement('div');
       if (i === this._cursor[2]) {
         const head = document.createElement('span');
@@ -111,7 +111,6 @@ export default class Editor {
         div.textContent = line;
       }
       this._elem.appendChild(div);
-      i += 1;
     }
   }
 }
