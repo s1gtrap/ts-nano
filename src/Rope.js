@@ -145,15 +145,15 @@ var Rope = /** @class */ (function () {
     Rope.prototype.charToLine = function (char) {
         var e_1, _a;
         var end = 0;
-        var num = 0;
+        var last = 0;
         try {
-            for (var _b = __values(this.lineIndices()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var _d = __read(_c.value, 2), idx = _d[0], line = _d[1];
+            for (var _b = __values(Utils_1.default.enumerate(this.lineIndices())), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var _d = __read(_c.value, 2), i = _d[0], _e = __read(_d[1], 2), idx = _e[0], line = _e[1];
                 end = idx + line.length;
                 if (idx > char) {
                     break;
                 }
-                num += 1;
+                last = i;
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -166,7 +166,7 @@ var Rope = /** @class */ (function () {
         if (char > end) {
             throw new Error("char " + char + " is out of bounds");
         }
-        return num - 1;
+        return last;
     };
     Rope.prototype.lineToChar = function (line) {
         var e_2, _a;

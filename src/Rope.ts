@@ -116,18 +116,18 @@ export default class Rope {
 
   public charToLine(char: number): number {
     let end = 0;
-    let num = 0;
-    for (const [idx, line] of this.lineIndices()) {
+    let last = 0;
+    for (const [i, [idx, line]] of Utils.enumerate(this.lineIndices())) {
       end = idx + line.length;
       if (idx > char) {
         break;
       }
-      num += 1;
+      last = i;
     }
     if (char > end) {
       throw new Error(`char ${char} is out of bounds`);
     }
-    return num - 1;
+    return last;
   }
 
   public lineToChar(line: number): number {
