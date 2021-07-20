@@ -164,7 +164,7 @@ var Rope = /** @class */ (function () {
             finally { if (e_1) throw e_1.error; }
         }
         if (char > end) {
-            throw new Error('char ${char} out of bounds');
+            throw new Error("char " + char + " is out of bounds");
         }
         return num - 1;
     };

@@ -125,7 +125,7 @@ export default class Rope {
       num += 1;
     }
     if (char > end) {
-      throw new Error('char ${char} out of bounds');
+      throw new Error(`char ${char} is out of bounds`);
     }
     return num - 1;
   }
