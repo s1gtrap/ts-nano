@@ -1,4 +1,15 @@
 "use strict";
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -95,29 +106,41 @@ var Editor = /** @class */ (function () {
         }
     };
     Editor.prototype.render = function () {
-        var _this = this;
+        var e_1, _a;
         while (this._elem.firstChild) {
             this._elem.removeChild(this._elem.firstChild);
         }
-        Array.from(this._rope.lines()).forEach(function (line, i) {
-            var div = document.createElement('div');
-            if (i === _this._cursor[2]) {
-                var head = document.createElement('span');
-                var cursor = document.createElement('span');
-                var tail = document.createElement('span');
-                head.textContent = line.slice(0, _this._cursor[1]);
-                cursor.textContent = line[_this._cursor[1]] || ' ';
-                cursor.classList.add('cursor');
-                tail.textContent = line.slice(_this._cursor[1] + 1);
-                div.appendChild(head);
-                div.appendChild(cursor);
-                div.appendChild(tail);
+        var i = 0;
+        try {
+            for (var _b = __values(this._rope.lines()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var line = _c.value;
+                var div = document.createElement('div');
+                if (i === this._cursor[2]) {
+                    var head = document.createElement('span');
+                    var cursor = document.createElement('span');
+                    var tail = document.createElement('span');
+                    head.textContent = line.slice(0, this._cursor[1]);
+                    cursor.textContent = line[this._cursor[1]] || ' ';
+                    cursor.classList.add('cursor');
+                    tail.textContent = line.slice(this._cursor[1] + 1);
+                    div.appendChild(head);
+                    div.appendChild(cursor);
+                    div.appendChild(tail);
+                }
+                else {
+                    div.textContent = line;
+                }
+                this._elem.appendChild(div);
+                i += 1;
             }
-            else {
-                div.textContent = line;
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            _this._elem.appendChild(div);
-        });
+            finally { if (e_1) throw e_1.error; }
+        }
     };
     return Editor;
 }());

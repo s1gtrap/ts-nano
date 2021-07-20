@@ -93,7 +93,8 @@ export default class Editor {
     while (this._elem.firstChild) {
       this._elem.removeChild(this._elem.firstChild);
     }
-    Array.from(this._rope.lines()).forEach((line, i) => {
+    let i = 0;
+    for (const line of this._rope.lines()) {
       const div = document.createElement('div');
       if (i === this._cursor[2]) {
         const head = document.createElement('span');
@@ -110,6 +111,7 @@ export default class Editor {
         div.textContent = line;
       }
       this._elem.appendChild(div);
-    });
+      i += 1;
+    }
   }
 }
