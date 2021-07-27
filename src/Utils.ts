@@ -45,4 +45,24 @@ export default class Utils {
     }
     return edges;
   }
+
+  public static *merge(offset: number, length: number, spans: Iterable<Span<string>>): Generator<Span<Set<string>>> {
+    const edges = Utils.edges(Utils.split(offset, length, spans));
+    const classes: string[] = [];
+    let last;
+    for (const [offset, [add, remove]] of Object.entries(edges)) {
+      if (last !== undefined) {
+        yield [last, Number(offset) - last, new Set(classes)];
+      }
+      Array.prototype.push.apply(classes, add);
+      for (const className of remove) {
+        const idx = classes.indexOf(className);
+        if (idx === -1) {
+          throw new Error(`class never initialized: ${className}`);
+        }
+        classes.splice(idx, 1);
+      }
+      last = Number(offset);
+    }
+  }
 }

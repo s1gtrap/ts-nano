@@ -163,6 +163,66 @@ var Utils = /** @class */ (function () {
         }
         return edges;
     };
+    Utils.merge = function (offset, length, spans) {
+        var edges, classes, last, _a, _b, _c, offset_1, _d, add, remove, remove_1, remove_1_1, className, idx, e_4_1;
+        var e_4, _e, e_5, _f;
+        return __generator(this, function (_g) {
+            switch (_g.label) {
+                case 0:
+                    edges = Utils.edges(Utils.split(offset, length, spans));
+                    classes = [];
+                    _g.label = 1;
+                case 1:
+                    _g.trys.push([1, 7, 8, 9]);
+                    _a = __values(Object.entries(edges)), _b = _a.next();
+                    _g.label = 2;
+                case 2:
+                    if (!!_b.done) return [3 /*break*/, 6];
+                    _c = __read(_b.value, 2), offset_1 = _c[0], _d = __read(_c[1], 2), add = _d[0], remove = _d[1];
+                    if (!(last !== undefined)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, [last, Number(offset_1) - last, new Set(classes)]];
+                case 3:
+                    _g.sent();
+                    _g.label = 4;
+                case 4:
+                    Array.prototype.push.apply(classes, add);
+                    try {
+                        for (remove_1 = (e_5 = void 0, __values(remove)), remove_1_1 = remove_1.next(); !remove_1_1.done; remove_1_1 = remove_1.next()) {
+                            className = remove_1_1.value;
+                            idx = classes.indexOf(className);
+                            if (idx === -1) {
+                                throw new Error("class never initialized: " + className);
+                            }
+                            classes.splice(idx, 1);
+                        }
+                    }
+                    catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                    finally {
+                        try {
+                            if (remove_1_1 && !remove_1_1.done && (_f = remove_1.return)) _f.call(remove_1);
+                        }
+                        finally { if (e_5) throw e_5.error; }
+                    }
+                    last = Number(offset_1);
+                    _g.label = 5;
+                case 5:
+                    _b = _a.next();
+                    return [3 /*break*/, 2];
+                case 6: return [3 /*break*/, 9];
+                case 7:
+                    e_4_1 = _g.sent();
+                    e_4 = { error: e_4_1 };
+                    return [3 /*break*/, 9];
+                case 8:
+                    try {
+                        if (_b && !_b.done && (_e = _a.return)) _e.call(_a);
+                    }
+                    finally { if (e_4) throw e_4.error; }
+                    return [7 /*endfinally*/];
+                case 9: return [2 /*return*/];
+            }
+        });
+    };
     return Utils;
 }());
 exports.default = Utils;

@@ -85,4 +85,23 @@ describe('Utils', () => {
       expect(Array.from(Utils.edges([[1, 1, 'b'], [0, 3, 'a']]))).to.deep.equal([[['a'], []], [['b'], []], [[], ['b']], [[], ['a']]]);
     });
   });
+
+  describe('#merge', () => {
+    it('should merge spans', () => {
+      expect(Array.from(Utils.merge(0, 0, [[0, 0, '']]))).to.deep.equal([]);
+      expect(Array.from(Utils.merge(0, 1, [[0, 1, '']]))).to.deep.equal([[0, 1, new Set([''])]]);
+      expect(Array.from(Utils.merge(42, 19, [[42, 19, '']]))).to.deep.equal([[42, 19, new Set([''])]]);
+      expect(Array.from(Utils.merge(0, 1, [[0, 1, ''], [0, 1, 'bf']]))).to.deep.equal([[0, 1, new Set(['', 'bf'])]]);
+      expect(Array.from(Utils.merge(0, 2, [[0, 2, ''], [0, 1, 'it']]))).to.deep.equal([[0, 1, new Set(['', 'it'])], [1, 1, new Set([''])]]);
+      expect(Array.from(Utils.merge(0, 2, [[0, 2, ''], [1, 1, 'ul']]))).to.deep.equal([[0, 1, new Set([''])], [1, 1, new Set(['', 'ul'])]]);
+      expect(Array.from(Utils.merge(0, 2, [[0, 2, ''], [1, 1, 'high'], [0, 1, 'bold']]))).to.deep.equal([[0, 1, new Set(['', 'bold'])], [1, 1, new Set(['', 'high'])]]);
+      expect(Array.from(Utils.merge(0, 2, [[0, 2, ''], [1, 1, 'blue'], [0, 2, 'red']]))).to.deep.equal([[0, 1, new Set(['', 'red'])], [1, 1, new Set(['', 'red', 'blue'])]]);
+      expect(Array.from(Utils.merge(137, 7, [[137, 7, ''], [140, 3, 'yellow']]))).to.deep.equal([[137, 3, new Set([''])], [140, 3, new Set(['', 'yellow'])], [143, 1, new Set([''])]]);
+      expect(Array.from(Utils.merge(10, 35, [[10, 35, ''], [10, 34, 'text-muted'], [44, 1, 'text-primary']]))).to.deep.equal([[10, 34, new Set(['', 'text-muted'])], [44, 1, new Set(['', 'text-primary'])]]);
+      expect(Array.from(Utils.merge(10, 35, [[10, 35, ''], [10, 35, 'text-muted'], [44, 1, 'text-primary']]))).to.deep.equal([[10, 34, new Set(['', 'text-muted'])], [44, 1, new Set(['', 'text-muted', 'text-primary'])]]);
+      expect(Array.from(Utils.merge(10, 36, [[10, 36, ''], [10, 35, 'text-muted'], [44, 1, 'text-primary']]))).to.deep.equal([[10, 34, new Set(['', 'text-muted'])], [44, 1, new Set(['', 'text-muted', 'text-primary'])], [45, 1, new Set([''])]]);
+      expect(Array.from(Utils.merge(23, 64, [[23, 64, ''], [0, 532, 'text-wrap'], [5, 391, 'fs-2']]))).to.deep.equal([[23, 64, new Set(['', 'text-wrap', 'fs-2'])]]);
+      expect(Array.from(Utils.merge(0, 40, [[0, 40, ''], [8, 16, 'bold'], [16, 16, 'italic']]))).to.deep.equal([[0, 8, new Set([''])], [8, 8, new Set(['', 'bold'])], [16, 8, new Set(['', 'bold', 'italic'])], [24, 8, new Set(['', 'italic'])], [32, 8, new Set([''])]]);
+    });
+  });
 });
