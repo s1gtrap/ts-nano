@@ -64,4 +64,25 @@ describe('Utils', () => {
       );
     });
   });
+
+  describe('#edges', () => {
+    it('should return edges of annotated spans', () => {
+      expect(Array.from(Utils.edges([]))).to.deep.equal([]);
+      expect(Array.from(Utils.edges([[0, 1, 'a']]))).to.deep.equal([[['a'], []], [[], ['a']]]);
+      expect(Array.from(Utils.edges([[0, 1, 'a'], [0, 1, 'b']]))).to.deep.equal([[['a', 'b'], []], [[], ['a', 'b']]]);
+      expect(Array.from(Utils.edges([[0, 1, 'b'], [0, 1, 'a']]))).to.deep.equal([[['b', 'a'], []], [[], ['b', 'a']]]);
+      expect(Array.from(Utils.edges([[0, 1, 'a'], [1, 1, 'b']]))).to.deep.equal([[['a'], []], [['b'], ['a']], [[], ['b']]]);
+      expect(Array.from(Utils.edges([[0, 1, 'b'], [1, 1, 'a']]))).to.deep.equal([[['b'], []], [['a'], ['b']], [[], ['a']]]);
+      expect(Array.from(Utils.edges([[1, 1, 'a'], [0, 1, 'b']]))).to.deep.equal([[['b'], []], [['a'], ['b']], [[], ['a']]]);
+      expect(Array.from(Utils.edges([[1, 1, 'b'], [0, 1, 'a']]))).to.deep.equal([[['a'], []], [['b'], ['a']], [[], ['b']]]);
+      expect(Array.from(Utils.edges([[0, 1, 'a'], [2, 1, 'b']]))).to.deep.equal([[['a'], []], [[], ['a']], [['b'], []], [[], ['b']]]);
+      expect(Array.from(Utils.edges([[0, 1, 'b'], [2, 1, 'a']]))).to.deep.equal([[['b'], []], [[], ['b']], [['a'], []], [[], ['a']]]);
+      expect(Array.from(Utils.edges([[2, 1, 'b'], [0, 1, 'a']]))).to.deep.equal([[['a'], []], [[], ['a']], [['b'], []], [[], ['b']]]);
+      expect(Array.from(Utils.edges([[2, 1, 'a'], [0, 1, 'b']]))).to.deep.equal([[['b'], []], [[], ['b']], [['a'], []], [[], ['a']]]);
+      expect(Array.from(Utils.edges([[0, 3, 'a'], [1, 1, 'b']]))).to.deep.equal([[['a'], []], [['b'], []], [[], ['b']], [[], ['a']]]);
+      expect(Array.from(Utils.edges([[0, 3, 'b'], [1, 1, 'a']]))).to.deep.equal([[['b'], []], [['a'], []], [[], ['a']], [[], ['b']]]);
+      expect(Array.from(Utils.edges([[1, 1, 'a'], [0, 3, 'b']]))).to.deep.equal([[['b'], []], [['a'], []], [[], ['a']], [[], ['b']]]);
+      expect(Array.from(Utils.edges([[1, 1, 'b'], [0, 3, 'a']]))).to.deep.equal([[['a'], []], [['b'], []], [[], ['b']], [[], ['a']]]);
+    });
+  });
 });

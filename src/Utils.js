@@ -134,6 +134,35 @@ var Utils = /** @class */ (function () {
             }
         });
     };
+    Utils.edges = function (spans) {
+        var e_3, _a;
+        var edges = [];
+        try {
+            for (var spans_2 = __values(spans), spans_2_1 = spans_2.next(); !spans_2_1.done; spans_2_1 = spans_2.next()) {
+                var _b = __read(spans_2_1.value, 3), offset = _b[0], length_1 = _b[1], className = _b[2];
+                if (edges[offset] === undefined) {
+                    edges[offset] = [[className], []];
+                }
+                else {
+                    edges[offset][0].push(className);
+                }
+                if (edges[offset + length_1] === undefined) {
+                    edges[offset + length_1] = [[], [className]];
+                }
+                else {
+                    edges[offset + length_1][1].push(className);
+                }
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (spans_2_1 && !spans_2_1.done && (_a = spans_2.return)) _a.call(spans_2);
+            }
+            finally { if (e_3) throw e_3.error; }
+        }
+        return edges;
+    };
     return Utils;
 }());
 exports.default = Utils;
