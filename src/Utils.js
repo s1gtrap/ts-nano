@@ -37,6 +37,22 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Utils = /** @class */ (function () {
     function Utils() {
@@ -75,6 +91,46 @@ var Utils = /** @class */ (function () {
                     finally { if (e_1) throw e_1.error; }
                     return [7 /*endfinally*/];
                 case 8: return [2 /*return*/];
+            }
+        });
+    };
+    Utils.split = function (offset, length, spans) {
+        var spans_1, spans_1_1, _a, x1, x2, v, e_2_1;
+        var e_2, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _c.trys.push([0, 5, 6, 7]);
+                    spans_1 = __values(spans), spans_1_1 = spans_1.next();
+                    _c.label = 1;
+                case 1:
+                    if (!!spans_1_1.done) return [3 /*break*/, 4];
+                    _a = __read(spans_1_1.value, 3), x1 = _a[0], x2 = _a[1], v = _a[2];
+                    if (!(x1 <= offset + length && offset <= x1 + x2
+                        && Math.min(offset + length, x1 + x2) - Math.max(x1, offset) > 0)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, [
+                            Math.max(x1, offset),
+                            Math.min(offset + length, x1 + x2) - Math.max(x1, offset),
+                            v,
+                        ]];
+                case 2:
+                    _c.sent();
+                    _c.label = 3;
+                case 3:
+                    spans_1_1 = spans_1.next();
+                    return [3 /*break*/, 1];
+                case 4: return [3 /*break*/, 7];
+                case 5:
+                    e_2_1 = _c.sent();
+                    e_2 = { error: e_2_1 };
+                    return [3 /*break*/, 7];
+                case 6:
+                    try {
+                        if (spans_1_1 && !spans_1_1.done && (_b = spans_1.return)) _b.call(spans_1);
+                    }
+                    finally { if (e_2) throw e_2.error; }
+                    return [7 /*endfinally*/];
+                case 7: return [2 /*return*/];
             }
         });
     };
