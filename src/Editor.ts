@@ -1,15 +1,41 @@
-import Utils from './Utils';
+import Utils, { Span } from './Utils';
 import Rope from './Rope';
 
-export default class Editor {
+export type Highlight = [number, number, string];
+
+export default class Editor implements EventTarget {
+  private _highlights: [number, number, string][] = [];
   private _cursor = [0, 0, 0];
   private _rope: Rope;
+  private _delegator = document.createDocumentFragment();
 
   constructor(private _elem: HTMLElement, content = '') {
     this._elem.addEventListener('keydown', this.onkeydown.bind(this));
     this._elem.addEventListener('paste', this.onpaste.bind(this));
     this._rope = Rope.leaf(content)
     this.render();
+  }
+
+  public addEventListener(...args: [string, EventListenerOrEventListenerObject | null]): void {
+    this._delegator.addEventListener(...args);
+  }
+
+  public dispatchEvent(...args: [Event]): boolean {
+    return this._delegator.dispatchEvent(...args);
+  }
+
+  public removeEventListener(...args: [string, EventListenerOrEventListenerObject | null]): void {
+    this._delegator.removeEventListener(...args);
+  }
+
+  public get highlights(): Highlight[] {
+    return Array.from(this._highlights);
+  }
+
+  public addHighlight(span: Highlight): void {
+    this._highlights.push(span);
+    this.render();
+    this.dispatchEvent(new Event('change'));
   }
 
   private onkeydown(e: KeyboardEvent) {
@@ -94,21 +120,21 @@ export default class Editor {
     while (this._elem.firstChild) {
       this._elem.removeChild(this._elem.firstChild);
     }
-    for (const [i, line] of Utils.enumerate(this._rope.lines())) {
+    for (const [i, [lineOffset, line]] of Utils.enumerate(this._rope.lineIndices())) {
       const div = document.createElement('div');
+      const chunks: Span<string>[] = [[lineOffset, line.length, ''], ...this._highlights];
       if (i === this._cursor[2]) {
-        const head = document.createElement('span');
-        const cursor = document.createElement('span');
-        const tail = document.createElement('span');
-        head.textContent = line.slice(0, this._cursor[1]);
-        cursor.textContent = line[this._cursor[1]] || ' ';
-        cursor.classList.add('cursor');
-        tail.textContent = line.slice(this._cursor[1] + 1);
-        div.appendChild(head);
-        div.appendChild(cursor);
-        div.appendChild(tail);
-      } else {
-        div.textContent = line;
+        chunks.push([lineOffset + this._cursor[0], 1, 'cursor']);
+      }
+      for (const [offset, length, classes] of Array.from(Utils.merge(lineOffset, line.length + 1, chunks))) {
+        const span = document.createElement('span');
+        for (const className of classes) {
+          if (className !== '') {
+            span.classList.add(className);
+          }
+        }
+        span.textContent = line.slice(offset - lineOffset, offset - lineOffset + length) || ' ';
+        div.appendChild(span);
       }
       this._elem.appendChild(div);
     }
