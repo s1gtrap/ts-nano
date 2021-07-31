@@ -6,6 +6,7 @@
     "browser",
     "editor"
   ],
+  "repository": "s1gtrap/ts-nano",
   "license": "MIT",
   "author": "William Tange <will@brt.sexy> (https://tan.ge/)",
   "main": "src/index.js",
@@ -24,6 +25,5 @@
     "mocha": "^9.0.2",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
-  },
-  "respository": "s1gtrap/ts-nano"
+  }
 }
