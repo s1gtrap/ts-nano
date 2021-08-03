@@ -9,7 +9,7 @@
   "repository": "s1gtrap/ts-nano",
   "license": "MIT",
   "author": "William Tange <will@brt.sexy> (https://tan.ge/)",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha",
     "lint": "eslint . --ext .ts",
