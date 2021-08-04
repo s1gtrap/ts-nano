@@ -73,6 +73,13 @@ var Editor = /** @class */ (function () {
         }
         (_a = this._delegator).removeEventListener.apply(_a, __spreadArray([], __read(args)));
     };
+    Object.defineProperty(Editor.prototype, "content", {
+        get: function () {
+            return this._rope.toString();
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Editor.prototype, "highlights", {
         get: function () {
             return Array.from(this._highlights);

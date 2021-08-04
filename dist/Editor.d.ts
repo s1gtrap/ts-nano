@@ -9,6 +9,7 @@ export default class Editor implements EventTarget {
     addEventListener(...args: [string, EventListenerOrEventListenerObject | null]): void;
     dispatchEvent(...args: [Event]): boolean;
     removeEventListener(...args: [string, EventListenerOrEventListenerObject | null]): void;
+    get content(): string;
     get highlights(): Highlight[];
     addHighlight(span: Highlight): void;
     private onkeydown;

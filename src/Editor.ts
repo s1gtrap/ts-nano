@@ -28,6 +28,10 @@ export default class Editor implements EventTarget {
     this._delegator.removeEventListener(...args);
   }
 
+  public get content(): string {
+    return this._rope.toString();
+  }
+
   public get highlights(): Highlight[] {
     return Array.from(this._highlights);
   }
