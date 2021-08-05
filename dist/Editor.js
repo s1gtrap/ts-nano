@@ -90,7 +90,7 @@ var Editor = /** @class */ (function () {
     Editor.prototype.addHighlight = function (span) {
         this._highlights.push(span);
         this.render();
-        this.dispatchEvent(new Event('change'));
+        this.dispatchEvent(new Event('highlightschange'));
     };
     Editor.prototype.onkeydown = function (e) {
         var _a, _b;
@@ -102,6 +102,8 @@ var Editor = /** @class */ (function () {
             this._cursor[0] += 1;
             this._cursor[1] = this._cursor[0];
             this.render();
+            this.dispatchEvent(new Event('textchange'));
+            return;
         }
         switch (e.key) {
             case 'ArrowLeft':
@@ -150,6 +152,7 @@ var Editor = /** @class */ (function () {
                         this._cursor[1] = this._cursor[0] = len;
                     }
                     this.render();
+                    this.dispatchEvent(new Event('textchange'));
                 }
                 break;
             case 'Enter':
@@ -157,6 +160,7 @@ var Editor = /** @class */ (function () {
                 this._cursor[1] = this._cursor[0] = 0;
                 this._cursor[2] += 1;
                 this.render();
+                this.dispatchEvent(new Event('textchange'));
                 break;
             default:
                 break;
@@ -170,6 +174,7 @@ var Editor = /** @class */ (function () {
             this._cursor[2] = this._rope.charToLine(idx + text.length);
             this._cursor[0] = this._cursor[1] = idx + text.length - this._rope.lineToChar(this._cursor[2]);
             this.render();
+            this.dispatchEvent(new Event('textchange'));
         }
     };
     Editor.prototype.render = function () {

@@ -39,7 +39,7 @@ export default class Editor implements EventTarget {
   public addHighlight(span: Highlight): void {
     this._highlights.push(span);
     this.render();
-    this.dispatchEvent(new Event('change'));
+    this.dispatchEvent(new Event('highlightschange'));
   }
 
   private onkeydown(e: KeyboardEvent) {
@@ -51,6 +51,8 @@ export default class Editor implements EventTarget {
       this._cursor[0] += 1;
       this._cursor[1] = this._cursor[0];
       this.render();
+      this.dispatchEvent(new Event('textchange'));
+      return;
     }
     switch (e.key) {
       case 'ArrowLeft':
@@ -96,6 +98,7 @@ export default class Editor implements EventTarget {
             this._cursor[1] = this._cursor[0] = len;
           }
           this.render();
+          this.dispatchEvent(new Event('textchange'));
         }
         break;
       case 'Enter':
@@ -103,6 +106,7 @@ export default class Editor implements EventTarget {
         this._cursor[1] = this._cursor[0] = 0;
         this._cursor[2] += 1;
         this.render();
+        this.dispatchEvent(new Event('textchange'));
         break;
       default:
         break;
@@ -117,6 +121,7 @@ export default class Editor implements EventTarget {
       this._cursor[2] = this._rope.charToLine(idx + text.length);
       this._cursor[0] = this._cursor[1] = idx + text.length - this._rope.lineToChar(this._cursor[2])
       this.render();
+      this.dispatchEvent(new Event('textchange'));
     }
   }
 
