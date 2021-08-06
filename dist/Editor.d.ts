@@ -12,6 +12,7 @@ export default class Editor implements EventTarget {
     get content(): string;
     get highlights(): Highlight[];
     addHighlight(span: Highlight): void;
+    removeHighlight(span: Highlight): boolean;
     clearHighlights(): void;
     private onkeydown;
     private onpaste;

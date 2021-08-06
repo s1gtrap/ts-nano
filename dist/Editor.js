@@ -92,6 +92,20 @@ var Editor = /** @class */ (function () {
         this.render();
         this.dispatchEvent(new Event('highlightschange'));
     };
+    Editor.prototype.removeHighlight = function (span) {
+        var idx = this._highlights.findIndex(function (highlight) { return (span[0] === highlight[0]
+            && span[1] === highlight[1]
+            && span[2] === highlight[2]); });
+        if (idx !== -1) {
+            this._highlights.splice(idx, 1);
+            this.render();
+            this.dispatchEvent(new Event('highlightschange'));
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
     Editor.prototype.clearHighlights = function () {
         this._highlights = [];
         this.render();

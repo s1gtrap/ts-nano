@@ -42,6 +42,22 @@ export default class Editor implements EventTarget {
     this.dispatchEvent(new Event('highlightschange'));
   }
 
+  public removeHighlight(span: Highlight): boolean {
+    const idx = this._highlights.findIndex((highlight) => (
+      span[0] === highlight[0]
+        && span[1] === highlight[1]
+        && span[2] === highlight[2]
+    ));
+    if (idx !== -1) {
+      this._highlights.splice(idx, 1);
+      this.render();
+      this.dispatchEvent(new Event('highlightschange'));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public clearHighlights(): void {
     this._highlights = [];
     this.render();
