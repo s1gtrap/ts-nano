@@ -42,6 +42,12 @@ export default class Editor implements EventTarget {
     this.dispatchEvent(new Event('highlightschange'));
   }
 
+  public clearHighlights(): void {
+    this._highlights = [];
+    this.render();
+    this.dispatchEvent(new Event('highlightschange'));
+  }
+
   private onkeydown(e: KeyboardEvent) {
     if (e.key === 'v' && (e.ctrlKey || e.metaKey)) { // paste
       return;

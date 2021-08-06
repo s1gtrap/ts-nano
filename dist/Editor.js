@@ -92,6 +92,11 @@ var Editor = /** @class */ (function () {
         this.render();
         this.dispatchEvent(new Event('highlightschange'));
     };
+    Editor.prototype.clearHighlights = function () {
+        this._highlights = [];
+        this.render();
+        this.dispatchEvent(new Event('highlightschange'));
+    };
     Editor.prototype.onkeydown = function (e) {
         var _a, _b;
         if (e.key === 'v' && (e.ctrlKey || e.metaKey)) { // paste
